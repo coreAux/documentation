@@ -113,3 +113,8 @@ module.exports = {
 Then you will be able to fetch your **Articles** by this slug.
 
 You will be able to find your articles by slug with this request `GET /articles?slug=my-article-slug`
+
+## Create a `slug` endpoint
+
+Blogs and similar content system often relies on URL:s for each entry to be that of a slug. A regular design pattern is to rely on that slug, i.e. the parameters in the URL, to fetch the corresponding data. Creating an endpoint found at `articles/my-article-slug` you need to modify the route as well as the controller.
+

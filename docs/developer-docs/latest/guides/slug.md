@@ -118,14 +118,10 @@ You will be able to find your articles by slug with this request `GET /articles?
 
 Blogs and similar content system often relies on URL:s for each entry to be that of a slug. A regular design pattern is to rely on that slug, i.e. the parameters in the URL, to fetch the corresponding data. Creating an endpoint found at `articles/my-article-slug` you need to modify the route as well as the controller.
 
-```js
-'use strict';
-const { sanitizeEntity } = require('strapi-utils');
+**Path —** `./api/article/config/Article.js`
 
-/**
- * Read the documentation (https://strapi.io/documentation/developer-docs/latest/development/backend-customization.html#core-controllers)
- * to customize this controller
- */
+```js
+const { sanitizeEntity } = require('strapi-utils');
 
 module.exports = {
   /**
@@ -137,22 +133,25 @@ module.exports = {
   async findSlug(ctx) {
     const { slug } = ctx.params;
 
-    const entity = await strapi.services.post.findOne({ slug });
+    const entity = await strapi.services.article.findOne({ slug });
     return sanitizeEntity(entity, { model: strapi.models.post });
   },
 };
 ```
 
-Then in api/article/conifg/routes.json
+Then in the `routes.json` for our Articles, find the GET-route where `path` equals `/articles/:id` and change it to the following:
+
+**Path —** `./api/article/config/routes.json`
 
 ```js
 {
   "method": "GET",
-  "path": "/posts/:slug",
-  "handler": "post.findSlug",
+  "path": "/articles/:slug",
+  "handler": "article.findSlug",
   "config": {
     "policies": []
   }
 },
 ```
 
+You will be able to find your articles by slug via this endpoint `/articles/my-article-slug`.
